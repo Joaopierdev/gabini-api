@@ -23,6 +23,18 @@ public partial class UsuarioDbContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
+        modelBuilder.Entity<Usuario>()
+           .HasKey(u => u.Id);
+        modelBuilder.Entity<Usuario>()
+            .Property(u => u.Id)
+            .ValueGeneratedOnAdd();
+
+        modelBuilder.Entity<Endereco>()
+            .HasKey(e => e.Id);
+        modelBuilder.Entity<Endereco>()
+            .Property(e => e.Id)
+            .ValueGeneratedOnAdd();
+
         OnModelCreatingPartial(modelBuilder);
     }
 

@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using usuario.Repositories;
 using usuario.Service;
 
@@ -14,6 +17,23 @@ namespace usuario
             );
         }
 
+        private static void Authentication(IHostApplicationBuilder builder)
+        {
+            // Configuração de autenticação e autorização
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SECRET_KEY"]!))
+                    };
+                });
+            builder.Services.AddAuthorization();
+        }
         private static void AddControllersAndDependencies(IHostApplicationBuilder builder)
         {
             builder.Services.AddControllers()
@@ -30,6 +50,7 @@ namespace usuario
             var builder = WebApplication.CreateBuilder(args);
             InjectRepositoryDependency(builder);
             AddControllersAndDependencies(builder);
+            Authentication(builder);
             var app = builder.Build();
 
             app.MapControllers();

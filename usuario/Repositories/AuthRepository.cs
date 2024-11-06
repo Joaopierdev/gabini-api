@@ -12,9 +12,9 @@ namespace usuario.Repositories
             _context = context;
         }
 
-        public async Task<Usuario?> GetUserByEmailOrUsernameAndPassword(string email, string password)
+        public async Task<Usuario?> GetUserByEmailOrUsernameAndPassword(string email, string username, string senha)
         {
-            return await _context.usuarios.FirstOrDefaultAsync(c => c.Email == email && c.Senha == password);
+            return await _context.usuarios.FirstOrDefaultAsync(usuario => usuario.Email == email || usuario.Username == username && usuario.Senha == senha);
         }
 
 

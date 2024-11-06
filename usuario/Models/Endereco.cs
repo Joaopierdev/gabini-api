@@ -5,8 +5,6 @@ namespace usuario.Models
 {
     public class Endereco
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Key]
         public string Id { get; private set; }
         public string CEP { get; private set; }
         public string Logradouro { get; private set; }
