@@ -15,14 +15,14 @@ namespace usuario.Service
 
         public async Task<Usuario> GetUsuario(string usuarioId)
         {
-            Usuario usuario = await getUsuarioById(usuarioId);
+            Usuario usuario = await GetUsuarioById(usuarioId);
 
             return usuario;
         }
 
-        public async Task<Usuario?> getUsuarioById(string usuarioId)
+        public async Task<Usuario> GetUsuarioById(string usuarioId)
         {
-            Usuario? usuario = await _usuarioRepository.getUsuarioById(usuarioId);
+            Usuario? usuario = await _usuarioRepository.GetUsuarioById(usuarioId);
             if (usuario == null)
             {
                 throw new Exception("Não foi possível encontrar o usuário");
@@ -32,7 +32,7 @@ namespace usuario.Service
         }
 
 
-        public async Task<Usuario> CriarUsuario(CadastroUsuarioDTO usuarioDTO)
+        public async Task<Usuario> CriaUsuario(CadastroUsuarioDTO usuarioDTO)
         {
             Endereco endereco = new Endereco(
                 usuarioDTO.Endereco.CEP,
@@ -59,14 +59,55 @@ namespace usuario.Service
                 endereco
             );
 
-            usuario = await _usuarioRepository.SalvarUsuario(usuario);
+            usuario = await SalvaUsuario(usuario);
 
             return usuario;
         }
 
-        public async Task<Usuario> EditarUsuario(string usuarioId, CadastroUsuarioDTO usuarioDTO)
+        public async Task<Usuario> EditaUsuario(string usuarioId, CadastroUsuarioDTO usuarioDTO)
         {
-            Usuario usuario = await getUsuarioById(usuarioId);
+            Usuario usuario = await GetUsuarioById(usuarioId);
+            usuario = await EditaDadosUsuario(usuario, usuarioDTO);
+            usuario = await AtualizaUsuario(usuario);
+
+            return usuario;
+        }
+
+        public async Task<Usuario> EditaDadosUsuario(Usuario usuario, CadastroUsuarioDTO usuarioDTO)
+        {
+            usuario.Username = usuarioDTO.Username;
+            usuario.Nome = usuarioDTO.Nome;
+            usuario.Sobrenome = usuarioDTO.Sobrenome;
+            usuario.Email = usuarioDTO.Email;
+            usuario.DataNascimento = usuarioDTO.DataNascimento;
+            usuario.Genero = usuarioDTO.Genero;
+            usuario.Telefone = usuarioDTO.Telefone;
+            usuario.RG = usuarioDTO.RG;
+            usuario.CPF = usuarioDTO.CPF;
+            usuario.Endereco.CEP = usuarioDTO.Endereco.CEP;
+            usuario.Endereco.Logradouro = usuarioDTO.Endereco.Logradouro;
+            usuario.Endereco.Complemento = usuarioDTO.Endereco.Complemento;
+            usuario.Endereco.NumeroCasa = usuarioDTO.Endereco.NumeroCasa;
+            usuario.Endereco.Bairro = usuarioDTO.Endereco.Bairro;
+            usuario.Endereco.Localidade = usuarioDTO.Endereco.Localidade;
+            usuario.Endereco.Estado = usuarioDTO.Endereco.Estado;
+
+            return usuario;
+
+        }
+
+        public async Task<Usuario> SalvaUsuario(Usuario usuario)
+        {
+            usuario = await _usuarioRepository.SalvaUsuario(usuario);
+
+            return usuario;
+        }
+
+        public async Task<Usuario> AtualizaUsuario(Usuario usuario)
+        {
+            await _usuarioRepository.AtualizaUsuario(usuario);
+
+            return usuario;
         }
     }
 }

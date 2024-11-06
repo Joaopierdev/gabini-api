@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using usuario.Repositories;
 using usuario.Service;
@@ -9,6 +10,37 @@ namespace usuario
 {
     public class Program
     {
+
+        private static void ConfigureSwagger(IServiceCollection services)
+        {
+            services.AddEndpointsApiExplorer();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Orders Manager API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
+        }
         private static void InjectRepositoryDependency(IHostApplicationBuilder builder)
         {
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -34,6 +66,13 @@ namespace usuario
                 });
             builder.Services.AddAuthorization();
         }
+
+        private static void InitializeSwagger(WebApplication app)
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
         private static void AddControllersAndDependencies(IHostApplicationBuilder builder)
         {
             builder.Services.AddControllers()
@@ -43,15 +82,27 @@ namespace usuario
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<AuthRepository>();
             builder.Services.AddScoped<TokenService>();
+            builder.Services.AddScoped<UsuarioService>();
+            builder.Services.AddScoped<UsuarioRepository>();
         }
 
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            ConfigureSwagger(builder.Services);
             InjectRepositoryDependency(builder);
             AddControllersAndDependencies(builder);
             Authentication(builder);
+
+
             var app = builder.Build();
+
+            if (app.Environment.IsDevelopment())
+            {
+                // Inicialização do Swagger
+                InitializeSwagger(app);
+            }
 
             app.MapControllers();
 

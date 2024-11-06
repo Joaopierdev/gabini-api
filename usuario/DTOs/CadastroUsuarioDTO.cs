@@ -5,16 +5,16 @@ namespace usuario.DTOs
     public class CadastroUsuarioDTO
     {
         public string Username { get; set; }
-        public string Nome { get; private set; }
-        public string Sobrenome { get; private set; }
-        public string Email { get; private set; }
-        public DateTime DataNascimento { get; private set; }
-        public string Senha { get; private set; }
-        public string Genero { get; private set; }
-        public string Telefone { get; private set; }
-        public string RG { get; private set; }
-        public string CPF { get; private set; }
-        public string? ImagemPerfil { get; private set; }
-        public EnderecoDTO? Endereco { get; private set; }
+        public string Nome { get; set; }
+        public string Sobrenome { get; set; }
+        public string Email { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string Senha { get; set; }
+        public string Genero { get; set; }
+        public string Telefone { get; set; }
+        public string RG { get; set; }
+        public string CPF { get; set; }
+        public string? ImagemPerfil { get; set; }
+        public EnderecoDTO Endereco { get; set; }
     }
 }

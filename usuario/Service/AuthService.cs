@@ -17,18 +17,18 @@ namespace usuario.Service
             _tokenService = tokenService;
         }
 
-        public async Task<string> Login(string username, string email, string senha)
+        public async Task<string> Login(string UsernameOrEmail, string senha)
         {
-            Usuario usuario = await GetUserByEmailOrUsernameAndPassword(username, email, senha);
+            Usuario usuario = await GetUserByEmailOrUsernameAndPassword(UsernameOrEmail, senha);
 
             string token = _tokenService.CreateToken(usuario);
 
             return token;
         }
 
-        public async Task<Usuario> GetUserByEmailOrUsernameAndPassword(string? username, string? email, string senha)
+        public async Task<Usuario> GetUserByEmailOrUsernameAndPassword(string UsernameOrEmail, string senha)
         {
-            Usuario? usuario =  await _authRepository.GetUserByEmailOrUsernameAndPassword(username, email, senha);
+            Usuario? usuario =  await _authRepository.GetUserByEmailOrUsernameAndPassword(UsernameOrEmail, senha);
 
             if(usuario == null)
             {

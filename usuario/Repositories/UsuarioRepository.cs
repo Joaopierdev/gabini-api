@@ -12,7 +12,7 @@ namespace usuario.Repositories
             _context = context;
         }
 
-        public async Task<Usuario> SalvarUsuario(Usuario usuario)
+        public async Task<Usuario> SalvaUsuario(Usuario usuario)
         {
             _context.usuarios.Add(usuario);
             await _context.SaveChangesAsync();
@@ -20,11 +20,16 @@ namespace usuario.Repositories
             return usuario;
         }
 
-        public async Task<Usuario?> getUsuarioById(string usuarioId)
+        public async Task<Usuario?> GetUsuarioById(string usuarioId)
         {
             Usuario? usuario = await _context.usuarios.FirstOrDefaultAsync(u => u.Id ==  usuarioId);
 
             return usuario;
+        }
+
+        public async Task AtualizaUsuario(Usuario usuario)
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }

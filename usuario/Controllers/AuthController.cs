@@ -20,10 +20,12 @@ namespace usuario.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginUsuarioDTO LoginUsuarioDTO)
         {
-            string token = await _authService.Login(LoginUsuarioDTO.Username, LoginUsuarioDTO.Email, LoginUsuarioDTO.Senha);
+            string token = await _authService.Login(LoginUsuarioDTO.UsernameOrEmail, LoginUsuarioDTO.Senha);
 
-            return CreatedAtAction(nameof(SignIn), token);
+            return token;
         }
+
+        [HttpGet]
         public string GetAuthenticatedUserId(ClaimsPrincipal User)
         {
             string? userId = User.Claims.First(u => u.Type == "id")?.Value;

@@ -1,23 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using usuario.DTOs;
 
 namespace usuario.Models
 {
     public class Usuario
     {
         public string Id { get; private set; }
-        public string Username {  get; set; }
-        public string Nome { get; private set; }
-        public string Sobrenome { get; private set; }
-        public string Email { get; private set; }
-        public DateTime DataNascimento { get; private set; }
-        public string Senha { get; private set; }
-        public string Genero { get; private set; }
-        public string Telefone { get; private set; }
-        public string RG { get; private set; }
-        public string CPF { get; private set; }
-        public string? ImagemPerfil { get; private set; }
-        public Endereco? Endereco { get; private set; }
+        public string Username { get; set; }
+        public string Nome { get;  set; }
+        public string Sobrenome { get;  set; }
+        public string Email { get;  set; }
+        public DateTime DataNascimento { get;  set; }
+        public string Senha { get;  set; }
+        public string Genero { get;  set; }
+        public string Telefone { get;  set; }
+        public string RG { get;  set; }
+        public string CPF { get;  set; }
+        public string ImagemPerfil { get;  set; }
+        public Endereco Endereco { get;  set; }
 
         public Usuario() { }
 
@@ -33,8 +34,8 @@ namespace usuario.Models
             string rg,
             string cpf, 
             string imagemPerfil, 
-            Endereco? endereco
-            )
+            Endereco endereco
+        )
         {
             Username = username;
             Nome = nome;
@@ -48,6 +49,36 @@ namespace usuario.Models
             CPF = cpf;
             ImagemPerfil = imagemPerfil;
             Endereco = endereco; 
+        }
+
+        public UsuarioOutputDTO ToOutputDTO()
+        {
+            EnderecoDTO enderecoDTO = new(
+                this.Endereco.CEP,
+                this.Endereco.Logradouro,
+                this.Endereco.Complemento,
+                this.Endereco.NumeroCasa,
+                this.Endereco.Bairro,
+                this.Endereco.Localidade,
+                this.Endereco.Estado
+            );
+
+            UsuarioOutputDTO usuarioDTO = new(
+                Id = this.Id,
+                Username = this.Username,
+                Nome = this.Nome,
+                Sobrenome = this.Sobrenome,
+                Email = this.Email,
+                DataNascimento = this.DataNascimento,
+                Genero = this.Genero,
+                Telefone = this.Telefone,
+                RG = this.RG,
+                CPF = this.CPF,
+                ImagemPerfil = this.ImagemPerfil,
+                Endereco = new EnderecoDTO(enderecoDTO.CEP, enderecoDTO.Logradouro, enderecoDTO.Complemento, enderecoDTO.NumeroCasa, enderecoDTO.Bairro, enderecoDTO.Localidade, enderecoDTO.Estado)
+            );
+
+            return usuarioDTO;
         }
     }
 }

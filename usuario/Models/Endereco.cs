@@ -5,14 +5,14 @@ namespace usuario.Models
 {
     public class Endereco
     {
-        public string Id { get; private set; }
-        public string CEP { get; private set; }
-        public string Logradouro { get; private set; }
-        public string? Complemento { get; private set; }
-        public string NumeroCasa { get; private set; }
-        public string Bairro { get; private set; }
-        public string Localidade { get; private set; }
-        public string Estado { get; private set; }
+        public string Id { get; set; }
+        public string CEP { get; set; }
+        public string Logradouro { get; set; }
+        public string? Complemento { get;  set; }
+        public string NumeroCasa { get;  set; }
+        public string Bairro { get;  set; }
+        public string Localidade { get;  set; }
+        public string Estado { get;  set; }
 
         public Endereco() { }
 

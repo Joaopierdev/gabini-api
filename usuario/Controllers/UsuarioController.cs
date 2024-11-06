@@ -3,6 +3,7 @@ using usuario.DTOs;
 using usuario.Models;
 using usuario.Service;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace usuario.Controllers
 {
@@ -13,7 +14,6 @@ namespace usuario.Controllers
     {
         private readonly UsuarioService _usuarioService;
         private readonly AuthService _authService;
-
         
         public UsuarioController(UsuarioService usuarioService, AuthService authService)
         {
@@ -21,29 +21,30 @@ namespace usuario.Controllers
             _authService = authService;
         }
 
-
         [HttpPost]
-        public async Task<ActionResult<Usuario>> CadastroUsuario(CadastroUsuarioDTO usuarioDTO)
+        public async Task<ActionResult<UsuarioOutputDTO>> CadastroUsuario(CadastroUsuarioDTO usuarioDTO)
         {
-            Usuario usuario = await _usuarioService.CriarUsuario(usuarioDTO);
+            Usuario usuario = await _usuarioService.CriaUsuario(usuarioDTO);
 
-            return usuario;
+            return usuario.ToOutputDTO();
         }
 
         [HttpGet]
-        public async Task<ActionResult<Usuario>> GetUsuario()
+        public async Task<ActionResult<UsuarioOutputDTO>> GetUsuario()
         {
             string usuarioId = _authService.GetAuthenticatedUserId(User);
             Usuario usuario = await _usuarioService.GetUsuario(usuarioId);
 
-            return usuario;
+            return usuario.ToOutputDTO();
         }
 
         [HttpPut]
-        public async Task<ActionResult<Usuario>> EditUsuario(CadastroUsuarioDTO usuarioDTO)
+        public async Task<ActionResult<UsuarioOutputDTO>> EditaUsuario(CadastroUsuarioDTO usuarioDTO)
         {
             string usuarioId = _authService.GetAuthenticatedUserId(User);
-            Usuario usuario = _usuarioService.EditarUsuario(usuarioId, usuarioDTO);
+            Usuario usuario = await _usuarioService.EditaUsuario(usuarioId, usuarioDTO);
+
+            return usuario.ToOutputDTO();
         }
     }
 }
