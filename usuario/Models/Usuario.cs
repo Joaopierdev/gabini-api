@@ -53,16 +53,6 @@ namespace usuario.Models
 
         public UsuarioOutputDTO ToOutputDTO()
         {
-            EnderecoDTO enderecoDTO = new(
-                this.Endereco.CEP,
-                this.Endereco.Logradouro,
-                this.Endereco.Complemento,
-                this.Endereco.NumeroCasa,
-                this.Endereco.Bairro,
-                this.Endereco.Localidade,
-                this.Endereco.Estado
-            );
-
             UsuarioOutputDTO usuarioDTO = new(
                 Id = this.Id,
                 Username = this.Username,
@@ -75,7 +65,7 @@ namespace usuario.Models
                 RG = this.RG,
                 CPF = this.CPF,
                 ImagemPerfil = this.ImagemPerfil,
-                Endereco = new EnderecoDTO(enderecoDTO.CEP, enderecoDTO.Logradouro, enderecoDTO.Complemento, enderecoDTO.NumeroCasa, enderecoDTO.Bairro, enderecoDTO.Localidade, enderecoDTO.Estado)
+                Endereco = this.Endereco
             );
 
             return usuarioDTO;

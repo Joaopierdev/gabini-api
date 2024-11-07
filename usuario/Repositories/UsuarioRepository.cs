@@ -22,7 +22,7 @@ namespace usuario.Repositories
 
         public async Task<Usuario?> GetUsuarioById(string usuarioId)
         {
-            Usuario? usuario = await _context.usuarios.FirstOrDefaultAsync(u => u.Id ==  usuarioId);
+            Usuario? usuario = await _context.usuarios.Include(usuario => usuario.Endereco).FirstOrDefaultAsync(u => u.Id ==  usuarioId);
 
             return usuario;
         }

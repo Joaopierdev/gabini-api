@@ -16,7 +16,7 @@ namespace usuario.DTOs
         public string RG { get; set; }
         public string CPF { get; set; }
         public string? ImagemPerfil { get; set; }
-        public EnderecoDTO Endereco { get; set; }
+        public Endereco Endereco { get; set; }
     
         public UsuarioOutputDTO(
             string id, 
@@ -30,7 +30,7 @@ namespace usuario.DTOs
             string rG, 
             string cPF, 
             string? imagemPerfil, 
-            EnderecoDTO endereco
+            Endereco endereco
         )
         {
             Id = id;

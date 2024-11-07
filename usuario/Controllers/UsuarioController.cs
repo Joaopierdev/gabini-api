@@ -21,6 +21,7 @@ namespace usuario.Controllers
             _authService = authService;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UsuarioOutputDTO>> CadastroUsuario(CadastroUsuarioDTO usuarioDTO)
         {
