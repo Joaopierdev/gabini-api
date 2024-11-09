@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using usuario.DTOs;
+using Core.DTOs;
 
-namespace usuario.Models
+namespace Core.Models
 {
     public class Usuario
     {

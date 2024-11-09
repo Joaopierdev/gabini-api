@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
-using usuario.Models;
+using Core.Models;
 
-namespace usuario.Repositories;
+namespace Insfrastructure.Repositories.Data;
 
 public partial class UsuarioDbContext : DbContext
 {
-    public DbSet<Usuario> usuarios {  get; set; }
+    public DbSet<Usuario> usuarios { get; set; }
     public DbSet<Endereco> enderecos { get; set; }
 
-    public UsuarioDbContext() {}
+    public UsuarioDbContext() { }
 
     public UsuarioDbContext(DbContextOptions<UsuarioDbContext> options)
         : base(options)
-    {}
+    { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

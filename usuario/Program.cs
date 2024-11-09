@@ -3,8 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using usuario.Repositories;
-using usuario.Service;
+using Application.Service;
+using Core.Repositories;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Data;
+using Core.Service;
 
 namespace usuario
 {
@@ -79,11 +82,11 @@ namespace usuario
                 .AddJsonOptions(options =>
                     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles);
 
-            builder.Services.AddScoped<AuthService>();
-            builder.Services.AddScoped<AuthRepository>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<TokenService>();
-            builder.Services.AddScoped<UsuarioService>();
-            builder.Services.AddScoped<UsuarioRepository>();
+            builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+            builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         }
 
         public static void Main(string[] args)

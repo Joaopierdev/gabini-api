@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using usuario.DTOs;
-using usuario.Models;
-using usuario.Service;
+using Core.DTOs;
+using Core.Service;
 
 namespace usuario.Controllers
 {
@@ -10,9 +9,9 @@ namespace usuario.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
 
-        public AuthController(AuthService authService)
+        public AuthController(IAuthService authService)
         {
             _authService = authService;
         }

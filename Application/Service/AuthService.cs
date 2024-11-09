@@ -1,17 +1,16 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
-using usuario.DTOs;
-using usuario.Models;
-using usuario.Repositories;
+﻿using System.Security.Claims;
+using Core.Models;
+using Core.Repositories;
+using Core.Service;
 
-namespace usuario.Service
+namespace Application.Service
 {
-    public class AuthService
+    public class AuthService : IAuthService
     {
-        private readonly AuthRepository _authRepository;
+        private readonly IAuthRepository _authRepository;
         private readonly TokenService _tokenService;
 
-        public AuthService(AuthRepository authRepository, TokenService tokenService)
+        public AuthService(IAuthRepository authRepository, TokenService tokenService)
         {
             _authRepository = authRepository;
             _tokenService = tokenService;
@@ -28,9 +27,9 @@ namespace usuario.Service
 
         public async Task<Usuario> GetUserByEmailOrUsernameAndPassword(string UsernameOrEmail, string senha)
         {
-            Usuario? usuario =  await _authRepository.GetUserByEmailOrUsernameAndPassword(UsernameOrEmail, senha);
+            Usuario? usuario = await _authRepository.GetUserByEmailOrUsernameAndPassword(UsernameOrEmail, senha);
 
-            if(usuario == null)
+            if (usuario == null)
             {
                 throw new Exception("Dados inválidos. Por favor verifique os dados digitados e tente novamente");
             }

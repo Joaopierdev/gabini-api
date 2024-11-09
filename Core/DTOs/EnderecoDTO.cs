@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace usuario.DTOs
+namespace Core.DTOs
 {
     public class EnderecoDTO
     {

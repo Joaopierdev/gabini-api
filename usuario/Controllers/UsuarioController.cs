@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using usuario.DTOs;
-using usuario.Models;
-using usuario.Service;
+using Core.DTOs;
+using Core.Models;
+using Core.Service;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace usuario.Controllers
 {
@@ -12,10 +11,10 @@ namespace usuario.Controllers
     [Authorize]
     public class UsuarioController : ControllerBase
     {
-        private readonly UsuarioService _usuarioService;
-        private readonly AuthService _authService;
-        
-        public UsuarioController(UsuarioService usuarioService, AuthService authService)
+        private readonly IUsuarioService _usuarioService;
+        private readonly IAuthService _authService;
+
+        public UsuarioController(IUsuarioService usuarioService, IAuthService authService)
         {
             _usuarioService = usuarioService;
             _authService = authService;

@@ -2,9 +2,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using usuario.Models;
+using Core.Models;
+using Microsoft.Extensions.Configuration;
 
-namespace usuario.Service
+namespace Application.Service
 {
     public class TokenService
     {

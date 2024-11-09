@@ -1,6 +1,6 @@
-﻿using usuario.Models;
+﻿using Core.Models;
 
-namespace usuario.DTOs
+namespace Core.DTOs
 {
     public class CadastroUsuarioDTO
     {

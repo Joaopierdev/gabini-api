@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using usuario.Models;
+﻿using Infrastructure.Repositories.Data;
+using Microsoft.EntityFrameworkCore;
+using Core.Models;
+using Core.Repositories;
+using Insfrastructure.Repositories.Data;
 
-namespace usuario.Repositories
+namespace Infrastructure.Repositories
 {
-    public class UsuarioRepository
+    public class UsuarioRepository : IUsuarioRepository
     {
         private readonly UsuarioDbContext _context;
 
@@ -22,7 +25,7 @@ namespace usuario.Repositories
 
         public async Task<Usuario?> GetUsuarioById(string usuarioId)
         {
-            Usuario? usuario = await _context.usuarios.Include(usuario => usuario.Endereco).FirstOrDefaultAsync(u => u.Id ==  usuarioId);
+            Usuario? usuario = await _context.usuarios.Include(usuario => usuario.Endereco).FirstOrDefaultAsync(u => u.Id == usuarioId);
 
             return usuario;
         }

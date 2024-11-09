@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using usuario.Models;
+﻿using Infrastructure.Repositories.Data;
+using Microsoft.EntityFrameworkCore;
+using Core.Models;
+using Core.Repositories;
+using Insfrastructure.Repositories.Data;
 
-namespace usuario.Repositories
+namespace Infrastructure.Repositories
 {
-    public class AuthRepository
+    public class AuthRepository : IAuthRepository
     {
         private readonly UsuarioDbContext _context;
 

@@ -1,14 +1,15 @@
-﻿using usuario.DTOs;
-using usuario.Models;
-using usuario.Repositories;
+﻿using Core.DTOs;
+using Core.Models;
+using Core.Repositories;
+using Core.Service;
 
-namespace usuario.Service
+namespace Application.Service
 {
-    public class UsuarioService
+    public class UsuarioService : IUsuarioService
     {
-        private readonly UsuarioRepository _usuarioRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public UsuarioService(UsuarioRepository usuarioRepository)
+        public UsuarioService(IUsuarioRepository usuarioRepository)
         {
             _usuarioRepository = usuarioRepository;
         }

@@ -1,4 +1,4 @@
-﻿namespace usuario.DTOs
+﻿namespace Core.DTOs
 {
     public class LoginUsuarioDTO
     {
