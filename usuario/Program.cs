@@ -89,15 +89,28 @@ namespace usuario
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         }
 
+        private static void ConfigureCors(IHostApplicationBuilder builder)
+        {
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("PermitirTodasOrigens",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                    });
+            });
+        }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
 
             ConfigureSwagger(builder.Services);
             InjectRepositoryDependency(builder);
             AddControllersAndDependencies(builder);
             Authentication(builder);
-
+            ConfigureCors(builder);
 
             var app = builder.Build();
 
@@ -108,6 +121,7 @@ namespace usuario
             }
 
             app.MapControllers();
+            app.UseCors("PermitirTodasOrigens");
 
             app.Run();
         }
