@@ -3,6 +3,8 @@ using Core.DTOs;
 using Core.Models;
 using Core.Service;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
+using System.Net.Mime;
 
 namespace usuario.Controllers
 {
@@ -45,6 +47,31 @@ namespace usuario.Controllers
             Usuario usuario = await _usuarioService.EditaUsuario(usuarioId, usuarioDTO);
 
             return usuario.ToOutputDTO();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("{usuarioId}/UploadImage")]
+        public async Task<ActionResult<string>> UploadImage(string usuarioId, IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No image found");
+            }
+
+            using var memoryStream = new MemoryStream();
+            await file.CopyToAsync(memoryStream);
+
+            var fileData = new FileData
+            {
+              FileName = file.FileName,
+              Content = memoryStream.ToArray(),
+              ContentType = file.ContentType,
+              Extension = Path.GetExtension(file.FileName),
+            };
+
+            string imageUrl = await _usuarioService.AtualizaImagemUsuario(usuarioId, fileData);
+
+            return CreatedAtAction(nameof(UploadImage), imageUrl);
         }
     }
 }

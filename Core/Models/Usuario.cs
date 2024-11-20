@@ -17,7 +17,7 @@ namespace Core.Models
         public string Telefone { get;  set; }
         public string RG { get;  set; }
         public string CPF { get;  set; }
-        public string ImagemPerfil { get;  set; }
+        public string? ImagemPerfil { get;  set; }
         public Endereco Endereco { get;  set; }
 
         public Usuario() { }

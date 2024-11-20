@@ -29,6 +29,21 @@ namespace Infrastructure.Repositories
             return usuario;
         }
 
+        public async Task<bool> HasUsuario(string email, string username)
+        {
+            return await _context.usuarios.AnyAsync(u => u.Email == email || u.Username == username);
+        }
+
+        public async Task<bool> ExisteUsuarioComCpf(string cpf)
+        {
+            return await _context.usuarios.AnyAsync(u => u.CPF == cpf);
+        }
+
+        public async Task<bool> ExisteUsuarioComRg(string rg)
+        {
+            return await _context.usuarios.AnyAsync(u => u.RG == rg);
+        }
+
         public async Task AtualizaUsuario(Usuario usuario)
         {
             await _context.SaveChangesAsync();

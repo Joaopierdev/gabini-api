@@ -7,8 +7,6 @@ namespace Core.Service
     {
         public Task<Usuario> GetUsuario(string usuarioId);
 
-        public Task<Usuario> GetUsuarioById(string usuarioId);
-
         public Task<Usuario> CriaUsuario(CadastroUsuarioDTO usuarioDTO);
 
         public Task<Usuario> EditaUsuario(string usuarioId, CadastroUsuarioDTO usuarioDTO);
@@ -18,5 +16,9 @@ namespace Core.Service
         public Task<Usuario> SalvaUsuario(Usuario usuario);
 
         public Task<Usuario> AtualizaUsuario(Usuario usuario);
+
+        public Task<String> AtualizaImagemUsuario(string usuarioId, FileData fileData);
+
+        public Task<bool> IsCpf(string cpf);
     }
 }

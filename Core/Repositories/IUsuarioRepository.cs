@@ -14,5 +14,11 @@ namespace Core.Repositories
         public Task<Usuario?> GetUsuarioById(string usuarioId);
 
         public Task AtualizaUsuario(Usuario usuario);
+
+        public Task<bool> HasUsuario(string email, string username);
+
+        public Task<bool> ExisteUsuarioComCpf(string cpf);
+
+        public Task<bool> ExisteUsuarioComRg(string rg);
     }
 }

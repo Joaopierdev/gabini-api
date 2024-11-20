@@ -87,6 +87,7 @@ namespace usuario
             builder.Services.AddScoped<TokenService>();
             builder.Services.AddScoped<IUsuarioService, UsuarioService>();
             builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            builder.Services.AddScoped<IImagemService, ImagemService>();
         }
 
         private static void ConfigureCors(IHostApplicationBuilder builder)
@@ -122,6 +123,7 @@ namespace usuario
 
             app.MapControllers();
             app.UseCors("PermitirTodasOrigens");
+            app.UseStaticFiles();
 
             app.Run();
         }
